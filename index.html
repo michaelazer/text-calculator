@@ -9,9 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
-        .card-group {
+        /* .card-group {
             margin-top: 20px;
             margin-bottom: 20px;
+        } */
+
+        .calcs {
+            margin-top: 20px;
         }
 
         #chart-container {
@@ -29,7 +33,7 @@
 
 <body>
     <div class="container">
-        <div class="card-group">
+        <!-- <div class="card-group">
             <div class="card">
                 <div class="card-body">
                     <h5 class="text-center card-title">
@@ -54,21 +58,26 @@
                     <p class="text-center card-text" id="numberSentences">0</p>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </div> -->
+        <div class="row calcs">
             <div class="col-lg-8">
-                <div class="text-right">
-                    <button type="button" class="btn btn-dark" onclick="getChars()">Calculate</button>
-                </div>
+                <button type="button" class="btn btn-primary">
+                    Characters <span class="badge bg-secondary" id="numberCharacters1">0</span>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Words <span class="badge bg-secondary" id="numberWords1">0</span>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Sentences <span class="badge bg-secondary" id="numberSentences1">0</span>
+                </button>
             </div>
-            <!-- <div class="col-lg-4"></div> -->
         </div>
 
         <div class="row">
             <div class="col-lg-8">
                 <div class="form-group">
-                    <textarea class="form-control" id="FormControlTextarea1" rows="10"
-                        placeholder="Enter text here"></textarea>
+                    <textarea class="form-control" id="FormControlTextarea1" rows="10" placeholder="Enter text here"
+                        onChange="getChars()"></textarea>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -80,7 +89,7 @@
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
     <script>
-        function getChars() {
+        document.getElementById("FormControlTextarea1").addEventListener("keyup", function () {
             let textBox = document.getElementById("FormControlTextarea1").value;
             let spaces = 0
             let endings = 0
@@ -104,9 +113,9 @@
                 endings = endings - 1;
             }
 
-            document.getElementById("numberCharacters").innerHTML = textBox.length;
-            document.getElementById("numberWords").innerHTML = spaces + 1;
-            document.getElementById("numberSentences").innerHTML = endings;
+            document.getElementById("numberCharacters1").innerHTML = textBox.length;
+            document.getElementById("numberWords1").innerHTML = spaces + 1;
+            document.getElementById("numberSentences1").innerHTML = endings;
             document.getElementById("chart-container").innerHTML = "";
 
             var chart = anychart.tagCloud();
@@ -117,8 +126,7 @@
             chart.angles([0, -45, 90])
             chart.container("chart-container");
             chart.draw();
-
-        }
+        })
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
